@@ -1,10 +1,12 @@
 package org.example;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class AppDriver {
 
+    private final static String EXPEDIA_HOME = "https://www.expedia.com";
     private static WebDriver driver;
 
     public static void setUpChrome(){
@@ -29,5 +31,30 @@ public class AppDriver {
 
     public static WebDriver getDriver() {
         return driver;
+    }
+
+    public static String getExpediaHome() {
+        return EXPEDIA_HOME;
+    }
+
+    /**
+     * initNav is the inical navigation method designed to direct selenium to the part of the page needed for the
+     * code to run successfully.
+     */
+    public void initNav() {
+        getWebsite(getExpediaHome());
+        driver.findElement(By.xpath("//*[@id='uitk-tabs-button-container']/li[2]/a")).click();
+    }
+
+    /**
+     * will select the first option after typing in departure airport into "Leaving From" feild
+     * @param airPortCode this string will be entered into the location search box
+     */
+    public void setLoc1(String airPortCode) {
+        //click website
+
+        //typeintextbox
+
+        //selectfirstresult
     }
 }
