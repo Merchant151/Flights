@@ -54,7 +54,7 @@ public class AppDriver {
      * will select the first option after typing in departure airport into "Leaving From" feild
      * @param airPortCode this string will be entered into the location search box
      */
-    public void setLoc1(String airPortCode) {
+    public void setLoc1(String airPortCode) throws Exception{
         //click website loc1 box
         //System.out.println("searching for loc1");
         WebElement locBox = driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
@@ -72,12 +72,15 @@ public class AppDriver {
         System.out.println("moved and clicked");
 
         //typeintextbox
-        WebElement element;
-        WebDriverWait wait = new WebDriverWait(driver, 100);
-        element= wait.until(ExpectedConditions.elementToBeClickable(By.id("undefined-close")));
+        // the next three lines are ment to allow the webpage to load but it dosn't work.......
+        //WebElement element;
+        //WebDriverWait wait = new WebDriverWait(driver, 100);
+        //element= wait.until(ExpectedConditions.elementToBeClickable(By.id("undefined-close")));
+        Thread.sleep(100);
         System.out.println("recommended webdriver wait");
-        WebElement inBox = driver.findElement(By.xpath("//*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]"));
+        WebElement inBox = driver.findElement(By.className("uitk-field-input"));
         System.out.println("found box");
+        //                                              //*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]
         //                                              //*[@id="app-layer-location-field-leg1-origin-ta-dialog"]/div[2]/div/div[1]/section/div/input
         inBox.sendKeys(airPortCode);
         inBox.submit();
