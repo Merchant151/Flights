@@ -8,7 +8,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class AppDriver {
 
@@ -116,10 +119,6 @@ public class AppDriver {
      */
     public void dateSpan(String departing) {
         List<WebElement> leave = driver.findElements(By.className("uitk-faux-input"));
-        /*for (int i = 0; i < leave.size(); i++) {
-            System.out.println(i);
-            System.out.println(leave.get(i).getText());
-        }*/
         leave.get(2).click();
 
         Boolean dateFound = false;
@@ -139,7 +138,13 @@ public class AppDriver {
             }
 
             if(date1clicked){
-
+                String datePlus7 = plus7(departing);
+                for (int i = 0; i < dates.size(); i++) {
+                    if(dates.get(i).getAttribute("aria-label").contains((datePlus7))){
+                        dates.get(i).click();
+                        dateFound = true;
+                    }
+                }
             }
 
             if(!dateFound){
@@ -147,6 +152,141 @@ public class AppDriver {
                 //System.out.println("found next month button");
             }
         }
+    }
+
+    private String plus7(String departing) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        String nDate = "";
+
+        String split[] = departing.split(" ");
+        nDate += split[2].substring(0,4) +"-";
+        nDate += monthFormat(split[0]) + "-";
+        nDate += dayFormat(split[1].substring(0,split[1].indexOf(',')));
+        //System.out.println(nDate);
+        try{
+            c.setTime(sdf.parse(nDate));
+        }catch (Exception e){
+            System.out.println("das tough");
+        }
+        c.add(Calendar.DAY_OF_MONTH,7);
+        nDate = sdf.format(c.getTime());
+        String splitA[] = nDate.split("-");
+        //Jun 17, 2021
+        String fDate = "";
+        fDate += monthFormatReverse(splitA[1])+" ";
+        fDate += dayFormatReverse(splitA[2])+", ";
+        fDate += splitA[0];
+
+
+        System.out.println(fDate);
+        return fDate;
+    }
+
+    private String dayFormatReverse(String s) {
+        if(s.contains("0")){
+            return s.substring(1);
+        }
+        return s;
+    }
+
+    private String monthFormatReverse(String s) {
+        String str = "";
+        switch (s){
+            case "01":
+                str = "Jan";
+                break;
+            case "02":
+                str = "Feb";
+                break;
+            case "03":
+                str = "Mar";
+                break;
+            case "04":
+                str = "Apr";
+                break;
+            case "05":
+                str = "May";
+                break;
+            case "06":
+                str = "Jun";
+                break;
+            case "07":
+                str = "Jul";
+                break;
+            case "08":
+                str = "Aug";
+                break;
+            case "09":
+                str = "Sep";
+                break;
+            case "10":
+                str = "Oct";
+                break;
+            case "11":
+                str = "Nov";
+                break;
+            case "12":
+                str = "Dec";
+                break;
+            default:
+                str = "Jan";
+                break;
+        }
+        return str;
+    }
+
+    private String dayFormat(String substring) {
+        if(substring.length()==1){
+            return "0"+substring;
+        }
+        return substring;
+    }
+
+    private String monthFormat(String s) {
+        String str = "";
+        switch (s.toLowerCase()){
+            case "jan":
+                str = "01";
+                break;
+            case "feb":
+                str = "02";
+                break;
+            case "mar":
+                str = "03";
+                break;
+            case "apr":
+                str = "04";
+                break;
+            case "may":
+                str = "05";
+                break;
+            case "jun":
+                str = "06";
+                break;
+            case "jul":
+                str = "07";
+                break;
+            case "aug":
+                str = "08";
+                break;
+            case "sep":
+                str = "09";
+                break;
+            case "oct":
+                str = "10";
+                break;
+            case "nov":
+                str = "11";
+                break;
+            case "dec":
+                str = "12";
+                break;
+            default:
+                str = "01";
+                break;
+        }
+        return str;
     }
 
     /*

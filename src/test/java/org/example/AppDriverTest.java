@@ -208,9 +208,25 @@ public class AppDriverTest {
 
         driver.dateSpan(date1);
 
+        List<WebElement> dates = driver.getDriver().findElements(By.className("uitk-date-picker-day"));
         //first date set?
-
+        String strFirst = "";
+        for (int i = 0; i < dates.size(); i++) {
+            System.out.println(dates.get(i).getAttribute("aria-label"));
+            if(dates.get(i).getAttribute("aria-label").contains("selected, current check in date.")){
+                strFirst = dates.get(i).getAttribute("aria-label");
+            }
+        }
+        Assert.assertTrue(strFirst.contains("Jun 1, 2021"));
         //second date set?
+        String strSnd = "";
+        for (int i = 0; i < dates.size(); i++) {
+            //System.out.println(dates.get(i).getAttribute("aria-label"));
+            if(dates.get(i).getAttribute("aria-label").contains("selected, current check out date.")){
+                strSnd = dates.get(i).getAttribute("aria-label");
+            }
+        }
+        Assert.assertTrue(strSnd.contains("Jun 8, 2021"));
     }
 
     /**
