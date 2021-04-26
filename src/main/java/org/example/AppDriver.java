@@ -8,6 +8,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class AppDriver {
 
     private final static String EXPEDIA_HOME = "https://www.expedia.com";
@@ -78,16 +80,16 @@ public class AppDriver {
         //element= wait.until(ExpectedConditions.elementToBeClickable(By.id("undefined-close")));
         Thread.sleep(100);
         System.out.println("recommended webdriver wait");
-        WebElement inBox = driver.findElement(By.className("uitk-field-input"));
+        List<WebElement> inBox = driver.findElements(By.className("uitk-field-input"));
         System.out.println("found box");
         //                                              //*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]
         //                                              //*[@id="app-layer-location-field-leg1-origin-ta-dialog"]/div[2]/div/div[1]/section/div/input
-        inBox.sendKeys(airPortCode);
-        inBox.submit();
+        inBox.get(1).sendKeys(airPortCode);
+        //inBox.get(1).submit();
 
         //selectfirstresult
-        driver.findElement(By.xpath("//*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]/div/div[2]/ul/li[1]/button"))
-                .click();
+        List<WebElement> firstOption = driver.findElements(By.className("uitk-button"));
+        firstOption.get(10).click();
     }
 
     /**

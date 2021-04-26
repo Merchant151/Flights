@@ -77,9 +77,9 @@ public class AppDriverTest {
         driver.setLoc1(loc);
 
         String loc1 = driver.getDriver()
-                .findElement(By.xpath("//*[@id='wizard-flight-tab-roundtrip']/div[2]/div[1]/div/div[1]/div/div/div/button[1]"))
-                .getAttribute("aria-label");
-        Assert.assertEquals("Leaving from Atlanta (ATL - Hartsfield-Jackson Atlanta Intl.)",loc1);
+                .findElement(By.className("uitk-faux-input"))
+                .getText();
+        Assert.assertEquals("Atlanta (ATL - Hartsfield-Jackson Atlanta Intl.)",loc1);
     }
 
     //this test might not be nessisary
@@ -113,10 +113,35 @@ public class AppDriverTest {
 
         List<WebElement> plsfind = driver.getDriver().findElements(By.className("uitk-field-input"));
         plsfind.get(1).sendKeys("atl");
+        //thank goodness this works!!!!!!
 
-        //System.out.println( plsfind.getAttribute("placeholder"));
+        List<WebElement> firstOption = driver.getDriver().findElements(By.className("uitk-button"));
+        System.out.println("got");
+        for (int i = 0; i < firstOption.size(); i++) {
+            System.out.println(i);
+            System.out.println(firstOption.get(i).getAttribute("data-stid"));
+        }
+        firstOption.get(10).click();
+
+        List<WebElement> find2 = driver.getDriver().findElements(By.className("uitk-faux-input"));
+        //   <button aria-label="Leaving from Washington (WAS - All Airports)" data-stid="location-field-leg1-origin-dialog-trigger" type="button" class="uitk-faux-input">Washington (WAS - All Airports)</button>
+        for (int i = 0; i < find2.size(); i++) {
+            System.out.println(i);
+            System.out.println(find2.get(i).getText());
+        }
 
         /**
+         * <button data-stid="location-field-leg1-origin-result-item-button" type="button"
+         * class="uitk-button uitk-button-medium uitk-button-fullWidth uitk-button-typeahead uitk-type-left has-subtext">
+         *     <svg class="uitk-icon uitk-icon-leading uitk-icon-small" aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+         * xmlns:xlink="http://www.w3.org/1999/xlink"><svg><path d="M3.64 14.26l2.86.95 4.02-4.02-8-4.59 1.16-1.16c.1-.1.26-.14.41-.1l9.3 2.98c1.58-1.58 3.15-3.2 4.77-4.75.31-.33.7-.58 1.16-.73.45-.16.87-.27 1.25-.34.55-.05.98.4.93.93-.07.38-.18.8-.34 1.25-.15.46-.4.85-.73 1.16l-4.75 4.78 2.97 9.29c.05.15 0 .29-.1.41l-1.17 1.16-4.57-8.02L8.8 17.5l.95 2.84L8.6 21.5l-2.48-3.62L2.5 15.4l1.14-1.14z"></path></svg></svg>
+         * <div class="uitk-typeahead-button-label uitk-type-medium uitk-type-300 truncate">
+         *     <div class="truncate"><span><strong>Washington (WAS - All Airports)</strong></span></div>
+         * <div class="is-subText truncate">Near Greenbelt ("Maryland Project No. 1"), Maryland, United States</div></div></button>
+         *
+         *
+         *
+         *
          * <div class="uitk-field has-no-visible-label has-placeholder">
          *     <label class="uitk-field-label is-visually-hidden">Leaving from</label>
          * <input data-stid="location-field-leg1-origin-dialog-input" autocapitalize="off" autocomplete="off" autocorrect="off" type="text" spellcheck="false"
@@ -181,7 +206,7 @@ public class AppDriverTest {
 
     @AfterClass
     public static void cleanUp() throws Exception {
-        Thread.sleep(100000);
+        Thread.sleep(1000);
         driver.cleanup();
     }
 
