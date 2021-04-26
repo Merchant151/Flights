@@ -66,8 +66,11 @@ public class AppDriverTest {
 
 
     @Test
-    public void testSetLoc1(){
+    public void testSetLoc1() throws Exception{
+       driver.initNav();
         String loc = "atl";
+        System.out.println("Starting setloc1");
+        //Thread.sleep(5000);
         driver.setLoc1(loc);
 
         String loc1 = driver.getDriver()
@@ -75,6 +78,7 @@ public class AppDriverTest {
                 .getAttribute("aria-label");
         Assert.assertEquals("Leaving from Atlanta (ATL - Hartsfield-Jackson Atlanta Intl.)",loc1);
     }
+
 
     /**
      *

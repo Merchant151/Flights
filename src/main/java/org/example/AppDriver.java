@@ -2,7 +2,11 @@ package org.example;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AppDriver {
 
@@ -51,10 +55,39 @@ public class AppDriver {
      * @param airPortCode this string will be entered into the location search box
      */
     public void setLoc1(String airPortCode) {
-        //click website
+        //click website loc1 box
+        //System.out.println("searching for loc1");
+        WebElement locBox = driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
+
+        /*
+        System.out.println("Debug Print test: ");
+        System.out.println(locBox.getAttribute("class"));
+        System.out.println("Debug print test complete!");
+
+        System.out.println("trying to click");
+        */
+        locBox.click();
+        //new Actions(driver).moveToElement(driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"))).click().perform();
+
+        System.out.println("moved and clicked");
 
         //typeintextbox
+        WebElement element;
+        WebDriverWait wait = new WebDriverWait(driver, 100);
+        element= wait.until(ExpectedConditions.elementToBeClickable(By.id("undefined-close")));
+        System.out.println("recommended webdriver wait");
+        WebElement inBox = driver.findElement(By.xpath("//*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]"));
+        System.out.println("found box");
+        //                                              //*[@id="app-layer-location-field-leg1-origin-ta-dialog"]/div[2]/div/div[1]/section/div/input
+        inBox.sendKeys(airPortCode);
+        inBox.submit();
 
         //selectfirstresult
+        driver.findElement(By.xpath("//*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]/div/div[2]/ul/li[1]/button"))
+                .click();
     }
+
+    /**
+    * //*[@id="wizard-flight-tab-roundtrip"]/div[2]/div[1]/div/div[1]/div/div/div/button
+    */
 }
