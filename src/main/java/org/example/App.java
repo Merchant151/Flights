@@ -45,5 +45,10 @@ public class App
         }catch (Exception e){
             System.out.println(e);
         }
+
+    }
+
+    public void initFilter(){
+        myDriver.clickNonStop();
     }
 }

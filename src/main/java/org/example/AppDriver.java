@@ -59,7 +59,7 @@ public class AppDriver {
      * will select the first option after typing in departure airport into "Leaving From" feild
      * @param airPortCode this string will be entered into the location search box
      */
-    public void setLoc1(String airPortCode) throws Exception{
+    public void setLoc1(String airPortCode) {
         //click website loc1 box
         //System.out.println("searching for loc1");
         WebElement locBox = driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
@@ -74,10 +74,14 @@ public class AppDriver {
         //WebElement element;
         //WebDriverWait wait = new WebDriverWait(driver, 100);
         //element= wait.until(ExpectedConditions.elementToBeClickable(By.id("undefined-close")));
-        Thread.sleep(100);
-        System.out.println("recommended webdriver wait");
+        try {
+            Thread.sleep(100);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        //System.out.println("recommended webdriver wait");
         List<WebElement> inBox = driver.findElements(By.className("uitk-field-input"));
-        System.out.println("found box");
+        //System.out.println("found box");
         //                                              //*[@id='app-layer-location-field-leg1-origin-ta-dialog']/div[2]
         //                                              //*[@id="app-layer-location-field-leg1-origin-ta-dialog"]/div[2]/div/div[1]/section/div/input
         inBox.get(1).sendKeys(airPortCode);
@@ -86,10 +90,10 @@ public class AppDriver {
         //selectfirstresult
         List<WebElement> firstOption = driver.findElements(By.className("uitk-button"));
         for (int i = 0; i < firstOption.size(); i++) {
-            System.out.println(i);
-            System.out.println(firstOption.get(i).getText());
+            //System.out.println(i);
+            //System.out.println(firstOption.get(i).getText());
             if(firstOption.get(i).getText().contains(airPortCode)){
-                System.out.println("I choose Option "+i+" because it says "+firstOption.get(i).getText());
+                //System.out.println("I choose Option "+i+" because it says "+firstOption.get(i).getText());
                 firstOption.get(i).click();
                 break;
             }
@@ -303,6 +307,35 @@ public class AppDriver {
         }
         return str;
     }
+
+    public void submitOptions() {
+        List<WebElement> inBox = driver.findElements(By.className("uitk-field-input"));
+
+        inBox.get(1).submit();
+    }
+
+    //TODO: Unfinished
+    public void clickNonStop(){
+        boolean exicuted = false;
+        while(!exicuted){
+            if(flightOnPage()){
+                exicuted = true;
+                //add click
+            }else  {
+                try{
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    //do absolutely nothing
+                }
+            }
+        }
+    }
+
+    //TODO: Unfinished
+    private boolean flightOnPage() {
+        return false;
+    }
+
 
     /*
     <button type="button" class="uitk-date-picker-day uitk-new-date-picker-day" data-day="3" aria-label="May 3, 2021."></button>

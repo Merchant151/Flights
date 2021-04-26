@@ -234,6 +234,22 @@ public class AppDriverTest {
      */
 
     @Test
+    public void testSubmitOptions(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        //Thread.sleep(100);
+        driver.dateSpan(date);
+
+        driver.submitOptions();
+
+    }
+
+    @Test
     public void testSaveTrip(){
 
     }
