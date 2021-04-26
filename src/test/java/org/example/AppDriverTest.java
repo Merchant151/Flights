@@ -11,6 +11,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
+import static org.example.AppDriver.getDriver;
+
 public class AppDriverTest {
 
     private static AppDriver driver;
@@ -26,7 +28,7 @@ public class AppDriverTest {
     @Test
     public void testGoogle(){
         driver.getWebsite("https://www.google.com");
-        String str = driver.getDriver().getTitle();
+        String str = getDriver().getTitle();
         Assert.assertEquals(str,"Google");
     }
 
@@ -36,7 +38,7 @@ public class AppDriverTest {
     @Test
     public void testExpedia(){
         driver.getWebsite("https://www.expedia.com");
-        String str = driver.getDriver().getTitle();
+        String str = getDriver().getTitle();
         Assert.assertEquals(str,"Expedia Travel: Vacation Homes, Hotels, Car Rentals, Flights & More");
     }
 
@@ -46,8 +48,8 @@ public class AppDriverTest {
     @Test
     public void testChangeTab(){
         driver.getWebsite(driver.getExpediaHome());
-        driver.getDriver().findElement(By.xpath("//*[@id='uitk-tabs-button-container']/li[2]/a")).click();
-        String roundTrip = driver.getDriver().
+        getDriver().findElement(By.xpath("//*[@id='uitk-tabs-button-container']/li[2]/a")).click();
+        String roundTrip = getDriver().
                 findElement(By.xpath("//*[@id=\"uitk-tabs-button-container\"]/div/li[1]/a")).getText();
 
         Assert.assertEquals("Roundtrip",roundTrip);
@@ -61,7 +63,7 @@ public class AppDriverTest {
     public void testInitNav(){
         driver.initNav();
 
-        String roundTrip = driver.getDriver().
+        String roundTrip = getDriver().
                 findElement(By.xpath("//*[@id=\"uitk-tabs-button-container\"]/div/li[1]/a")).getText();
 
         Assert.assertEquals("Roundtrip",roundTrip);
@@ -72,26 +74,40 @@ public class AppDriverTest {
     public void testSetLoc1() throws Exception{
        driver.initNav();
         String loc = "atl";
-        System.out.println("Starting setloc1");
+        //System.out.println("Starting setloc1");
         //Thread.sleep(5000);
         driver.setLoc1(loc);
 
-        String loc1 = driver.getDriver()
+        String loc1 = getDriver()
                 .findElement(By.className("uitk-faux-input"))
                 .getText();
         Assert.assertEquals("Atlanta (ATL - Hartsfield-Jackson Atlanta Intl.)",loc1);
     }
 
-    //this test might not be nessisary
     @Test
+    public void testSetLoc2(){
+        driver.initNav();
+        String loc = "cun";
+
+        driver.setLoc2(loc);
+
+        List<WebElement> selectors = driver.getDriver().findElements(By.className("uitk-faux-input"));
+        /*for (int i = 0; i < selectors.size(); i++) {
+            System.out.println(i);
+            System.out.println(selectors.get(i).getText());
+        }*/
+        Assert.assertEquals("Cancun (CUN - Cancun Intl.)",selectors.get(1).getText());
+    }
+
+    //this might not be necessary
     public void howManyInClass() {
         driver.initNav();
 
-        WebElement locBox = driver.getDriver().findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
+        WebElement locBox = getDriver().findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
         String me = locBox.getAttribute("class");
         locBox.click();
 
-        List<WebElement> tingys = driver.getDriver().findElements(By.className("uitk-field-input"));
+        List<WebElement> tingys = getDriver().findElements(By.className("uitk-field-input"));
         for (int i = 0; i < tingys.size(); i++) {
             System.out.println(i);
             try {
@@ -106,16 +122,16 @@ public class AppDriverTest {
     @Test
     public void testGo2Loc1() throws Exception{
         driver.initNav();
-        WebElement locBox = driver.getDriver().findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
+        WebElement locBox = getDriver().findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
         String me = locBox.getAttribute("class");
         locBox.click();
         Thread.sleep(100);
 
-        List<WebElement> plsfind = driver.getDriver().findElements(By.className("uitk-field-input"));
+        List<WebElement> plsfind = getDriver().findElements(By.className("uitk-field-input"));
         plsfind.get(1).sendKeys("atl");
         //thank goodness this works!!!!!!
 
-        List<WebElement> firstOption = driver.getDriver().findElements(By.className("uitk-button"));
+        List<WebElement> firstOption = getDriver().findElements(By.className("uitk-button"));
         System.out.println("got");
         for (int i = 0; i < firstOption.size(); i++) {
             System.out.println(i);
@@ -123,7 +139,7 @@ public class AppDriverTest {
         }
         firstOption.get(10).click();
 
-        List<WebElement> find2 = driver.getDriver().findElements(By.className("uitk-faux-input"));
+        List<WebElement> find2 = getDriver().findElements(By.className("uitk-faux-input"));
         //   <button aria-label="Leaving from Washington (WAS - All Airports)" data-stid="location-field-leg1-origin-dialog-trigger" type="button" class="uitk-faux-input">Washington (WAS - All Airports)</button>
         for (int i = 0; i < find2.size(); i++) {
             System.out.println(i);
@@ -206,7 +222,7 @@ public class AppDriverTest {
 
     @AfterClass
     public static void cleanUp() throws Exception {
-        Thread.sleep(1000);
+        Thread.sleep(100000);
         driver.cleanup();
     }
 

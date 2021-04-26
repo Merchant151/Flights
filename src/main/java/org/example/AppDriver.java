@@ -71,7 +71,7 @@ public class AppDriver {
         locBox.click();
         //new Actions(driver).moveToElement(driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"))).click().perform();
 
-        System.out.println("moved and clicked");
+        //System.out.println("moved and clicked");
 
         //typeintextbox
         // the next three lines are ment to allow the webpage to load but it dosn't work.......
@@ -93,6 +93,22 @@ public class AppDriver {
     }
 
     /**
-    * //*[@id="wizard-flight-tab-roundtrip"]/div[2]/div[1]/div/div[1]/div/div/div/button
-    */
+     * will select the first option after typing in departure airport into "Going to" feild
+     * @param airPortCode this string will be entered into the location search box
+     */
+    public void setLoc2(String airPortCode) {
+        List<WebElement> locBox = driver.findElements(By.className("uitk-faux-input"));
+        locBox.get(1).click();
+
+        List<WebElement> inBox = driver.findElements(By.className("uitk-field-input"));
+        for (int i = 0; i < inBox.size(); i++) {
+            System.out.println(i);
+        }
+        inBox.get(3).sendKeys(airPortCode);
+
+        List<WebElement> firstOption = driver.findElements(By.className("uitk-button"));
+        firstOption.get(10).click();
+    }
+
+
 }
