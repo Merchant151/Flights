@@ -110,5 +110,30 @@ public class AppDriver {
         firstOption.get(10).click();
     }
 
+    /**
+     * selects both a departing and return date based on input string return date will be 1 week after depart
+     * @param departing date as a string in the format: May 3, 2021
+     */
+    public void dateSpan(String departing) {
+        List<WebElement> leave = driver.findElements(By.className("uitk-faux-input"));
+        /*for (int i = 0; i < leave.size(); i++) {
+            System.out.println(i);
+            System.out.println(leave.get(i).getText());
+        }*/
+        leave.get(2).click();
 
+        List<WebElement> dates = driver.findElements(By.className("uitk-date-picker-day"));
+        for (int i = 0; i < dates.size(); i++) {
+            //System.out.println(i);
+            System.out.println(dates.get(i).getAttribute("aria-label"));
+            if(dates.get(i).getAttribute("aria-label").contains(departing)){
+                System.out.println("does contain departing");
+                dates.get(i).click();
+            }
+        }
+    }
+
+    /*
+    <button type="button" class="uitk-date-picker-day uitk-new-date-picker-day" data-day="3" aria-label="May 3, 2021."></button>
+     */
 }

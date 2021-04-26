@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.example.AppDriver.getDriver;
@@ -198,20 +199,23 @@ public class AppDriverTest {
      * //*[@id='wizard-flight-tab-roundtrip']/div[2]/div[1]/div/div[1]/div/div/div/button[1]
      */
 
-    @Test
-    public void testSetFrom(){
-
-    }
-
-    @Test
-    public void testSetTo(){
-
-    }
 
     @Test
     public void testDateSpan(){
+        driver.initNav();
 
+        String date1 = ("June 1, 2021");
+
+        driver.dateSpan(date1);
+
+        //first date set?
+
+        //second date set?
     }
+
+    /**
+     * <button type="button" class="uitk-date-picker-day uitk-new-date-picker-day" data-day="3" aria-label="May 3, 2021."></button>
+     */
 
     @Test
     public void testSaveTrip(){
@@ -222,7 +226,7 @@ public class AppDriverTest {
 
     @AfterClass
     public static void cleanUp() throws Exception {
-        Thread.sleep(100000);
+        Thread.sleep(10000);
         driver.cleanup();
     }
 
