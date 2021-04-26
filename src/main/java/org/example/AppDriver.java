@@ -64,13 +64,6 @@ public class AppDriver {
         //System.out.println("searching for loc1");
         WebElement locBox = driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"));
 
-        /*
-        System.out.println("Debug Print test: ");
-        System.out.println(locBox.getAttribute("class"));
-        System.out.println("Debug print test complete!");
-
-        System.out.println("trying to click");
-        */
         locBox.click();
         //new Actions(driver).moveToElement(driver.findElement(By.xpath("//*[@id=\"wizard-flight-tab-roundtrip\"]/div[2]/div[1]/div/div[1]/div/div/div"))).click().perform();
 
@@ -92,7 +85,16 @@ public class AppDriver {
 
         //selectfirstresult
         List<WebElement> firstOption = driver.findElements(By.className("uitk-button"));
-        firstOption.get(10).click();
+        for (int i = 0; i < firstOption.size(); i++) {
+            System.out.println(i);
+            System.out.println(firstOption.get(i).getText());
+            if(firstOption.get(i).getText().contains(airPortCode)){
+                System.out.println("I choose Option "+i+" because it says "+firstOption.get(i).getText());
+                firstOption.get(i).click();
+                break;
+            }
+        }
+        //firstOption.get(10).click();
     }
 
     /**
@@ -104,13 +106,26 @@ public class AppDriver {
         locBox.get(1).click();
 
         List<WebElement> inBox = driver.findElements(By.className("uitk-field-input"));
-        for (int i = 0; i < inBox.size(); i++) {
+        /*for (int i = 0; i < inBox.size(); i++) {
             System.out.println(i);
-        }
+        }*/
         inBox.get(3).sendKeys(airPortCode);
+        try{
+            Thread.sleep(1000);
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
         List<WebElement> firstOption = driver.findElements(By.className("uitk-button"));
-        firstOption.get(10).click();
+        for (int i = 0; i < firstOption.size(); i++) {
+            //System.out.println(i);
+            //System.out.println(firstOption.get(i).getText());
+            if(firstOption.get(i).getText().contains(airPortCode)){
+                firstOption.get(i).click();
+                break;
+            }
+        }
+        //firstOption.get(10).click();
     }
 
     /**
@@ -179,7 +194,7 @@ public class AppDriver {
         fDate += splitA[0];
 
 
-        System.out.println(fDate);
+        //System.out.println(fDate);
         return fDate;
     }
 

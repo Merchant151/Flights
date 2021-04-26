@@ -1,5 +1,6 @@
 package org.example;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +9,13 @@ import java.util.ArrayList;
  */
 public class App 
 {
+
+    public AppDriver myDriver;
+
+    public App(){
+        myDriver = new AppDriver();
+    }
+
     public static void main( String[] args )
     {
         /*
@@ -27,4 +35,15 @@ public class App
         */
     }
 
+    public void setAllData(String leaving, String going, String date) {
+        myDriver.initNav();
+        try {
+            myDriver.setLoc1(leaving);
+            myDriver.setLoc2(going);
+            Thread.sleep(100);
+            myDriver.dateSpan(date);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }

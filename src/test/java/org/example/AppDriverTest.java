@@ -74,7 +74,7 @@ public class AppDriverTest {
     @Test
     public void testSetLoc1() throws Exception{
        driver.initNav();
-        String loc = "atl";
+        String loc = "ATL";
         //System.out.println("Starting setloc1");
         //Thread.sleep(5000);
         driver.setLoc1(loc);
@@ -88,7 +88,7 @@ public class AppDriverTest {
     @Test
     public void testSetLoc2(){
         driver.initNav();
-        String loc = "cun";
+        String loc = "CUN";
 
         driver.setLoc2(loc);
 
@@ -136,7 +136,7 @@ public class AppDriverTest {
         System.out.println("got");
         for (int i = 0; i < firstOption.size(); i++) {
             System.out.println(i);
-            System.out.println(firstOption.get(i).getAttribute("data-stid"));
+            System.out.println(firstOption.get(i).getText());
         }
         firstOption.get(10).click();
 
@@ -212,7 +212,7 @@ public class AppDriverTest {
         //first date set?
         String strFirst = "";
         for (int i = 0; i < dates.size(); i++) {
-            System.out.println(dates.get(i).getAttribute("aria-label"));
+            //System.out.println(dates.get(i).getAttribute("aria-label"));
             if(dates.get(i).getAttribute("aria-label").contains("selected, current check in date.")){
                 strFirst = dates.get(i).getAttribute("aria-label");
             }
