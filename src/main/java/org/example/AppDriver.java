@@ -112,7 +112,7 @@ public class AppDriver {
 
     /**
      * selects both a departing and return date based on input string return date will be 1 week after depart
-     * @param departing date as a string in the format: May 3, 2021
+     * @param departing date as a string in the format: May 3, 2021 please use 3 letter abbreviation!!!
      */
     public void dateSpan(String departing) {
         List<WebElement> leave = driver.findElements(By.className("uitk-faux-input"));
@@ -122,13 +122,29 @@ public class AppDriver {
         }*/
         leave.get(2).click();
 
-        List<WebElement> dates = driver.findElements(By.className("uitk-date-picker-day"));
-        for (int i = 0; i < dates.size(); i++) {
+        Boolean dateFound = false;
+        List<WebElement> dates;
+
+        while(!dateFound){
+            dates = driver.findElements(By.className("uitk-date-picker-day"));
             //System.out.println(i);
-            System.out.println(dates.get(i).getAttribute("aria-label"));
-            if(dates.get(i).getAttribute("aria-label").contains(departing)){
-                System.out.println("does contain departing");
-                dates.get(i).click();
+            Boolean date1clicked = false;
+            for (int i = 0; i < dates.size(); i++) {
+                //System.out.println(dates.get(i).getAttribute("aria-label"));
+                if(dates.get(i).getAttribute("aria-label").contains(departing)&&!date1clicked){
+                    //System.out.println("does contain departing");
+                    dates.get(i).click();
+                    date1clicked = true;
+                }
+            }
+
+            if(date1clicked){
+
+            }
+
+            if(!dateFound){
+                driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div[1]/div[5]/div/figure/div[2]/div/div/div/div[2]/div/form/div[2]/div/div[1]/div[2]/div[2]/div/div/div[1]/div/div[2]/div/div[2]/div[1]/button[2]")).click();
+                //System.out.println("found next month button");
             }
         }
     }

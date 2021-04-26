@@ -204,7 +204,7 @@ public class AppDriverTest {
     public void testDateSpan(){
         driver.initNav();
 
-        String date1 = ("June 1, 2021");
+        String date1 = ("Jun 1, 2021");
 
         driver.dateSpan(date1);
 
