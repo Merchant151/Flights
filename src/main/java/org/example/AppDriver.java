@@ -1,8 +1,6 @@
 package org.example;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -152,11 +150,21 @@ public class AppDriver {
                 //System.out.println(dates.get(i).getAttribute("aria-label"));
                 if(dates.get(i).getAttribute("aria-label").contains(departing)&&!date1clicked){
                     //System.out.println("does contain departing");
-                    dates.get(i).click();
+                    try {
+                        dates.get(i).click();
+                    }catch (ElementClickInterceptedException x){
+                        Actions buttonunblocker = new Actions(driver);
+                        buttonunblocker.moveToElement(dates.get(i));
+                        dates.get(i).click();
+                    }
                     date1clicked = true;
                 }
             }
-
+            try{
+                Thread.sleep(300);
+            }catch (Exception e){
+                //haha
+            }
             if(date1clicked){
                 String datePlus7 = plus7(departing);
                 for (int i = 0; i < dates.size(); i++) {
@@ -315,6 +323,24 @@ public class AppDriver {
         inBox.get(1).submit();
     }
 
+    public void submitOptionsFromSearchPage() {
+//<button name="searchButton" data-test-id="search-form-button" type="button" class="uitk-button uitk-button-large uitk-button-fullWidth uitk-button-has-text uitk-button-primary">Search</button>
+            List<WebElement> inBox = driver.findElements(By.className("uitk-button"));
+            for (int i = 0; i < inBox.size(); i++) {
+                try {
+                    //System.out.println(inBox.get(i).getAttribute("name"));
+                    if (inBox.get(i).getAttribute("data-test-id").contains("search-form-button")) {
+                        //System.out.println("dataID found");
+                        inBox.get(i).click();
+                    }
+                } catch (NullPointerException e) {
+                    //do nothing
+                }
+            }
+    }
+
+
+
     //TODO: Unfinished
     public boolean clickNonStop(){
         //<div class="uitk-switch uitk-checkbox"><input id="stops-0" data-test-id="stops-0" name="stops" type="checkbox" value="0"><span class="uitk-switch-control" aria-hidden="true"></span><div class="uitk-switch-content"><label class="uitk-checkbox-switch-label" for="stops-0"><div class="uitk-type-300" data-test-id="stops-0-label" aria-hidden="true">Nonstop (10)</div><span id="stops-0-label" class="is-visually-hidden">10 Nonstop flights from $511</span></label></div></div>
@@ -347,10 +373,14 @@ public class AppDriver {
         List<WebElement> parent = driver.findElements(By.className("is-visually-hidden"));
         List<String> flightStrings = new ArrayList<String>();
         for (int i = 0; i < parent.size(); i++) {
-            List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
-            for (int j = 0; j < children.size(); j++) {
-                flightStrings.add(children.get(j).getText());
-                System.out.println(children.get(j).getText());
+            try {
+                List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
+                for (int j = 0; j < children.size(); j++) {
+                    flightStrings.add(children.get(j).getText());
+                    //System.out.println(children.get(j).getText());
+                }
+            }catch (StaleElementReferenceException e){
+                System.out.println("weird exeption trying again");
             }
         }
         return flightStrings.get(0);
@@ -360,17 +390,21 @@ public class AppDriver {
         List<WebElement> parent = driver.findElements(By.className("is-visually-hidden"));
         boolean found = false;
         for (int i = 0; i < parent.size()||found; i++) {
-            List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
-            for (int j = 0; j < children.size(); j++) {
-                String flightstring = (children.get(j).getText());
-                if(flightstring.contains("flight departing")) {
-                    parent.get(i).findElement(By.xpath("./..")).click();
-                    found = true;
-                }
+            try {
+                List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
+                for (int j = 0; j < children.size(); j++) {
+                    String flightstring = (children.get(j).getText());
+                    if (flightstring.contains("flight departing")) {
+                        parent.get(i).findElement(By.xpath("./..")).click();
+                        found = true;
+                    }
 
-            }
-            if(found){
-                break;
+                }
+                if (found) {
+                    break;
+                }
+            }catch (StaleElementReferenceException e){
+                System.out.println("Weird exception trying again..");
             }
         }
 
@@ -391,7 +425,7 @@ public class AppDriver {
                     }
                 }
             }catch (Exception e){
-                System.out.println("can't find button tyring agian");
+                //System.out.println("can't find button tyring agian");
                 try {
                     Thread.sleep(500);
                 }catch (Exception x){
@@ -450,6 +484,51 @@ public class AppDriver {
             }
         }
         return flightStrings.get(0);
+    }
+
+    public void submitDate() {
+        //<button data-stid="apply-date-picker" type="button" class="uitk-button uitk-button-large uitk-button-fullWidth uitk-button-has-text uitk-button-primary uitk-button-floating-full-width"><span>Done<span class="is-visually-hidden">Save changes and close the date picker.</span></span></button>
+        List<WebElement> buttons = driver.findElements(By.className("uitk-button"));
+        for (int i = 0; i < buttons.size(); i++) {
+            try {
+                if (buttons.get(i).getAttribute("data-stid").contains("apply-date-picker")) {
+                    buttons.get(i).click();
+                    //System.out.println("I did it :)");
+                    break;
+                }
+            }catch (NullPointerException e){
+                //System.out.println("Not sure why I was hit???");
+            }
+        }
+    }
+
+    public String plus1(String departing) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        String nDate = "";
+
+        String split[] = departing.split(" ");
+        nDate += split[2].substring(0,4) +"-";
+        nDate += monthFormat(split[0]) + "-";
+        nDate += dayFormat(split[1].substring(0,split[1].indexOf(',')));
+        //System.out.println(nDate);
+        try{
+            c.setTime(sdf.parse(nDate));
+        }catch (Exception e){
+            System.out.println("das tough");
+        }
+        c.add(Calendar.DAY_OF_MONTH,1);
+        nDate = sdf.format(c.getTime());
+        String splitA[] = nDate.split("-");
+        //Jun 17, 2021
+        String fDate = "";
+        fDate += monthFormatReverse(splitA[1])+" ";
+        fDate += dayFormatReverse(splitA[2])+", ";
+        fDate += splitA[0];
+
+
+        //System.out.println(fDate);
+        return fDate;
     }
 
 

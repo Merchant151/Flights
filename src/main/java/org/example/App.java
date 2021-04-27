@@ -2,6 +2,7 @@ package org.example;
 
 import java.sql.Driver;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Hello world!
@@ -65,6 +66,39 @@ public class App
         flight returnFlight = new flight(0,myDriver.readReturnFlight());
 
         return new Trip(destination, leavingDate, myDriver.plus7(leavingDate),firstFlight,returnFlight);
+
+    }
+
+    public Trip bestTrip(List<Trip> tripList) {
+        Trip best = tripList.get(0);
+        for (int i = 0; i < tripList.size(); i++) {
+            if (best.totalPrice > tripList.get(i).totalPrice){
+                best = tripList.get(i);
+            }
+        }
+        return best;
+    }
+
+    public void loadDate(){
+        myDriver.submitDate();
+        myDriver.submitOptions();
+        myDriver.waitForFlightLoad();
+        myDriver.clickNonStop();
+        myDriver.waitForFlightLoad();
+
+    }
+
+    public List<Trip> fillFlightList(String going, String date, String lastDate) {
+        List<Trip> tripList = new ArrayList<>();
+
+        do{
+            tripList.add(buildTrip(going,date));
+            date = myDriver.plus1(date);
+        }while(!date.equals(lastDate));
+
+        return tripList;
+
+
 
     }
 }

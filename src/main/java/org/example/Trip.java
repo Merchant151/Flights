@@ -99,9 +99,9 @@ public class Trip {
         // \n the total price of the trip is totalPrice
 
         tripString += "Round trip From "+leavingFrom+" to "+goingTo;
-        tripString += "\n First flight leaves "+leavingDate+" at "+firstFlight.getDepartTime();
-        tripString += "\n Second flight leaves "+returningDate+" at "+returnFlight.getDepartTime();
-
+        tripString += "\nFirst flight leaves "+leavingDate+" at "+firstFlight.getDepartTime();
+        tripString += "\nReturn flight leaves "+returningDate+" at "+returnFlight.getDepartTime();
+        tripString += "\nThe total price of the trip is $"+totalPrice;
         return tripString;
     }
 

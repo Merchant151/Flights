@@ -21,23 +21,33 @@ public class flight {
         //example flight string
         //Select and show fare information for Frontier Airlines flight, departing at 8:00am from Atlanta, Landing at 2:26pm in Cancun, Priced at $402
         String[] strings = flightStr.split(" ");
-//        for (int i = 0; i < strings.length; i++) {
-//            System.out.println(strings[i]);
-//        }
-        airline = strings[0];
-        departTime = strings[5];
-        //departLoc = strings[13].substring(0,strings[13].length());
-        //arrivalTime = strings[16];
-        //arrivalLocation = strings[18].substring(0,strings[18].length());
-        price = parseDouble(strings[6].substring(1));
+        //for (int i = 0; i < strings.length; i++) {
+        //    System.out.println(strings[i]);
+        //}
+
+        if(strings[2].contains("flight")) {
+            airline = strings[0];
+            departTime = strings[5];
+            price = parseDouble(strings[7].substring(1));
+        }else{
+            airline = strings[0];
+            departTime = strings[4];
+            price = parseDouble(strings[6].substring(1));
+        }
     }
 
     public flight(int returnflight, String flightStr){
         //Spirit Airlines flight departing at 12:45pm for an additional $0
         String[] strings = flightStr.split(" ");
-        airline = strings[0];
-        departTime = strings[5];
-        price = parseDouble(strings[9].substring(1));
+        if(strings[2].contains("flight")) {
+            airline = strings[0];
+            departTime = strings[5];
+            price = parseDouble(strings[9].substring(1));
+        }else{
+            airline = strings[0];
+            departTime = strings[4];
+            price = parseDouble(strings[8].substring(1));
+        }
     }
 
     @Override

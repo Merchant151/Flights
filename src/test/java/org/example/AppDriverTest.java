@@ -230,6 +230,19 @@ public class AppDriverTest {
         Assert.assertTrue(strSnd.contains("Jun 8, 2021"));
     }
 
+    @Test
+    public void testSubmitDate(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+        driver.submitDate();
+        driver.submitOptions();
+    }
+
     /**
      * <button type="button" class="uitk-date-picker-day uitk-new-date-picker-day" data-day="3" aria-label="May 3, 2021."></button>
      */
