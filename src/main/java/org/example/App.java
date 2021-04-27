@@ -51,4 +51,20 @@ public class App
     public void initFilter(){
         myDriver.clickNonStop();
     }
+
+    /**
+     * This method is run assuming the page is already set to the trip it wants to collect
+     * @param destination place you are going to vacation
+     * @param leavingDate date you are leaving for your vacation
+     * @return return trip built from data
+     */
+    public Trip buildTrip(String destination,String leavingDate) {
+        flight firstFlight = new flight(myDriver.readFlight());
+        myDriver.changeToReturnFlight();
+        myDriver.waitForFlightLoad();
+        flight returnFlight = new flight(0,myDriver.readReturnFlight());
+
+        return new Trip(destination, leavingDate, myDriver.plus7(leavingDate),firstFlight,returnFlight);
+
+    }
 }

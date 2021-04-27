@@ -29,7 +29,7 @@ public class flight {
         //departLoc = strings[13].substring(0,strings[13].length());
         //arrivalTime = strings[16];
         //arrivalLocation = strings[18].substring(0,strings[18].length());
-        price = parseDouble(strings[7].substring(1));
+        price = parseDouble(strings[6].substring(1));
     }
 
     public flight(int returnflight, String flightStr){

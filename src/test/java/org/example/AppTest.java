@@ -28,4 +28,20 @@ public class AppTest
         myApp.setAllData(leaving,going,date);
 
     }
+
+    @Test
+    public void testbuildFirstTrip() {
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+        myApp.setAllData(leaving,going,date);
+        myApp.myDriver.submitOptions();
+        myApp.myDriver.waitForFlightLoad();
+        myApp.myDriver.clickNonStop();
+        myApp.myDriver.waitForFlightLoad();
+
+        Trip mytrip = myApp.buildTrip(going,date);
+
+        System.out.println(mytrip.toString());
+    }
 }

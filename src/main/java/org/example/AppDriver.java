@@ -174,7 +174,7 @@ public class AppDriver {
         }
     }
 
-    private String plus7(String departing) {
+    public String plus7(String departing) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
         Calendar c = Calendar.getInstance();
         String nDate = "";
@@ -350,6 +350,7 @@ public class AppDriver {
             List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
             for (int j = 0; j < children.size(); j++) {
                 flightStrings.add(children.get(j).getText());
+                System.out.println(children.get(j).getText());
             }
         }
         return flightStrings.get(0);
