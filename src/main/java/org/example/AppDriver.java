@@ -389,7 +389,7 @@ public class AppDriver {
                         looking = false;
                     }
                 }
-            }catch (NullPointerException e){
+            }catch (Exception e){
                 System.out.println("can't find button tyring agian");
                 try {
                     Thread.sleep(500);
@@ -431,6 +431,24 @@ public class AppDriver {
 
         }
 
+    }
+
+    public String readReturnFlight() {
+
+        try{
+            Thread.sleep(3000);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        List<WebElement> parent = driver.findElements(By.className("is-visually-hidden"));
+        List<String> flightStrings = new ArrayList<String>();
+        for (int i = 0; i < parent.size(); i++) {
+            List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
+            for (int j = 0; j < children.size(); j++) {
+                flightStrings.add(children.get(j).getText());
+            }
+        }
+        return flightStrings.get(0);
     }
 
 

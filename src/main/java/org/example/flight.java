@@ -32,6 +32,14 @@ public class flight {
         price = parseDouble(strings[7].substring(1));
     }
 
+    public flight(int returnflight, String flightStr){
+        //Spirit Airlines flight departing at 12:45pm for an additional $0
+        String[] strings = flightStr.split(" ");
+        airline = strings[0];
+        departTime = strings[5];
+        price = parseDouble(strings[9].substring(1));
+    }
+
     @Override
     public String toString() {
         return "" + airline+" "+departTime+" "+departLoc+" "+arrivalTime+" "+arrivalLocation+" "+price;

@@ -332,11 +332,36 @@ public class AppDriverTest {
         driver.submitOptions();
         driver.waitForFlightLoad();
 
-
         driver.changeToReturnFlight();
 
 
     }
+
+    @Test
+    public void TestGrabReturnFlight(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+
+        driver.submitOptions();
+        driver.waitForFlightLoad();
+
+        driver.changeToReturnFlight();
+        driver.waitForFlightLoad();
+        //Grabs all flight strings on page
+        String firstFlight = driver.readReturnFlight();
+        //System.out.println(firstFlight);
+        flight flight = new flight(1,firstFlight);
+
+        System.out.println("the price of the return fligth is an additional "+ flight.getPrice());
+    }
+
+
 
 
     @AfterClass
