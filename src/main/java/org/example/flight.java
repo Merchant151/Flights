@@ -113,17 +113,17 @@ public class flight {
      *           uitk-layout-grid-item-columnspan-large-9">
                   <div class="uitk-layout-grid uitk-layout-grid-columns-medium-12">
      *             <div class="uitk-layout-grid-item uitk-layout-grid-item-columnspan-medium-7
-     *               uitk-layout-grid-item-columnspan-large-6">
-     *                <div data-test-id="arrival-time">
-     *                 <span class="uitk-type-400 uitk-type-bold uitk-text-emphasis-theme"
-     *                   data-test-id="departure-time">8:00am - 2:26pm</span>
-     *                    </div>
-     *                    <div class="uitk-flex">
-     *                     <div class="truncate uitk-type-200 uitk-spacing uitk-spacing-margin-blockstart-one
-     *                      uitk-flex-item uitk-flex-basis-seventy_two uitk-text-emphasis-theme"
-     *                       data-test-id="arrival-departure">Atlanta (ATL)
-     *                       - Cancun (CUN)</div>
-     *                       </div></div>
+     *              uitk-layout-grid-item-columnspan-large-6">
+     *               <div data-test-id="arrival-time">
+     *                <span class="uitk-type-400 uitk-type-bold uitk-text-emphasis-theme"
+     *                 data-test-id="departure-time">8:00am - 2:26pm</span>
+     *                  </div>
+     *                   <div class="uitk-flex">
+     *                    <div class="truncate uitk-type-200 uitk-spacing uitk-spacing-margin-blockstart-one
+     *                     uitk-flex-item uitk-flex-basis-seventy_two uitk-text-emphasis-theme"
+     *                     data-test-id="arrival-departure">Atlanta (ATL)
+     *                     - Cancun (CUN)</div>
+     *                      </div></div>
      *                       <div class="uitk-layout-grid-item uitk-layout-grid-item-columnspan-medium-5
      *                       uitk-layout-grid-item-columnspan-large-6">
      *                       <div class="uitk-type-200 uitk-text-emphasis-theme" data-test-id="journey-duration">

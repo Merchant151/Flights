@@ -297,6 +297,28 @@ public class AppDriverTest {
     }
 
     @Test
+    public void testFilterNonstop(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+        driver.submitOptions();
+        driver.waitForFlightLoad();
+
+        Boolean buttonfound = driver.clickNonStop();
+
+        if(buttonfound){
+            System.out.println("Nonstop button was found and clicked");
+        }else{
+            System.out.println("Nonstop flights were not available for this date");
+        }
+
+    }
+
+    @Test
     public void grabflight(){
         String leaving = "ATL";
         String going = "CUN";
@@ -360,9 +382,6 @@ public class AppDriverTest {
 
         System.out.println("the price of the return fligth is an additional "+ flight.getPrice());
     }
-
-
-
 
     @AfterClass
     public static void cleanUp() throws Exception {

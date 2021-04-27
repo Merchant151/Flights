@@ -316,27 +316,27 @@ public class AppDriver {
     }
 
     //TODO: Unfinished
-    public void clickNonStop(){
-        boolean exicuted = false;
-        while(!exicuted){
-            if(flightOnPage()){
-                exicuted = true;
-                //add click
-            }else  {
-                try{
-                    Thread.sleep(1000);
-                }catch (Exception e){
-                    //do absolutely nothing
+    public boolean clickNonStop(){
+        //<div class="uitk-switch uitk-checkbox"><input id="stops-0" data-test-id="stops-0" name="stops" type="checkbox" value="0"><span class="uitk-switch-control" aria-hidden="true"></span><div class="uitk-switch-content"><label class="uitk-checkbox-switch-label" for="stops-0"><div class="uitk-type-300" data-test-id="stops-0-label" aria-hidden="true">Nonstop (10)</div><span id="stops-0-label" class="is-visually-hidden">10 Nonstop flights from $511</span></label></div></div>
+        List<WebElement> checkboxs = driver.findElements(By.className("uitk-checkbox"));
+        Boolean nonstopAvailible = false;
+        for (int i = 0; i < checkboxs.size(); i++) {
+            List<WebElement> children = checkboxs.get(i).findElements(By.xpath("./child::*"));
+            for (int j = 0; j < children.size(); j++) {
+                //System.out.println(children.get(j).getAttribute("data-test-id"));
+                try {
+                    if (children.get(j).getAttribute("data-test-id").contains("stops-0")) {
+                        children.get(j).click();
+                        nonstopAvailible = true;
+                    }
+                }catch (NullPointerException e){
+                    //System.out.println("searching");
                 }
             }
         }
+        return nonstopAvailible;
     }
 
-    //TODO: Unfinished
-    private boolean flightOnPage() {
-        readFlight();
-        return false;
-    }
 
     public String  readFlight() {
         try{
