@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -333,8 +334,105 @@ public class AppDriver {
 
     //TODO: Unfinished
     private boolean flightOnPage() {
+        readFlight();
         return false;
     }
+
+    public String  readFlight() {
+        try{
+            Thread.sleep(3000);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        List<WebElement> parent = driver.findElements(By.className("is-visually-hidden"));
+        List<String> flightStrings = new ArrayList<String>();
+        for (int i = 0; i < parent.size(); i++) {
+            List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
+            for (int j = 0; j < children.size(); j++) {
+                flightStrings.add(children.get(j).getText());
+            }
+        }
+        return flightStrings.get(0);
+    }
+
+    public void changeToReturnFlight() {
+        List<WebElement> parent = driver.findElements(By.className("is-visually-hidden"));
+        boolean found = false;
+        for (int i = 0; i < parent.size()||found; i++) {
+            List<WebElement> children = parent.get(i).findElements(By.xpath("./child::*"));
+            for (int j = 0; j < children.size(); j++) {
+                String flightstring = (children.get(j).getText());
+                if(flightstring.contains("flight departing")) {
+                    parent.get(i).findElement(By.xpath("./..")).click();
+                    found = true;
+                }
+
+            }
+            if(found){
+                break;
+            }
+        }
+
+        boolean looking = true;
+        while(looking) {
+            List<WebElement> buttons = driver.findElements(By.className("uitk-button-large"));
+            //WebElement button = driver.findElement(By.className("uitk-button"));
+            //System.out.println(button.getAttribute("class"));
+            try {
+                for (int i = 0; i < buttons.size(); i++) {
+                    //System.out.println(i);
+                   // System.out.println(buttons.get(i).getAttribute("class"));
+                   // System.out.println(buttons.get(i).getText());
+                    if (buttons.get(i).getAttribute("data-test-id").contains("select-button")) {
+                        buttons.get(i).click();
+                        //System.out.println("slectbuttonfound");
+                        looking = false;
+                    }
+                }
+            }catch (NullPointerException e){
+                System.out.println("can't find button tyring agian");
+                try {
+                    Thread.sleep(500);
+                }catch (Exception x){
+                    //do nothing
+                }
+            }
+        }
+
+    }
+    /*
+    <button data-test-id="select-button" aria-label="Continue with Basic Economy for $511" type="button" class="uitk-button uitk-button-large uitk-button-has-text uitk-button-primary uitk-spacing uitk-spacing-margin-inlinestart-three">Continue</button>
+     */
+
+    public boolean areFLightsLoaded() {
+
+        try{
+            //System.out.println("Are flights loaded?");
+            readFlight();
+            return true;
+        }catch (IndexOutOfBoundsException e){
+            return false;
+        }
+    }
+
+    public void waitForFlightLoad() {
+        boolean waiting = true;
+        while (waiting){
+            if(!areFLightsLoaded()){
+                try{
+                    //System.out.println("waiting for fight to load!");
+                    Thread.sleep(500);
+                }catch (Exception e){
+                    System.out.println("oof");
+                }
+            }else{
+                waiting = false;
+            }
+
+        }
+
+    }
+
 
 
     /*

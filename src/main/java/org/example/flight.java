@@ -1,6 +1,7 @@
 package org.example;
 
-import static jdk.internal.math.FloatingDecimal.parseDouble;
+
+import static java.lang.Double.parseDouble;
 
 public class flight {
 
@@ -20,12 +21,15 @@ public class flight {
         //example flight string
         //Select and show fare information for Frontier Airlines flight, departing at 8:00am from Atlanta, Landing at 2:26pm in Cancun, Priced at $402
         String[] strings = flightStr.split(" ");
-        airline = strings[6];
-        departTime = strings[11];
-        departLoc = strings[13].substring(0,strings[13].length());
-        arrivalTime = strings[16];
-        arrivalLocation = strings[18].substring(0,strings[18].length());
-        price = parseDouble(strings[21].substring(1));
+//        for (int i = 0; i < strings.length; i++) {
+//            System.out.println(strings[i]);
+//        }
+        airline = strings[0];
+        departTime = strings[5];
+        //departLoc = strings[13].substring(0,strings[13].length());
+        //arrivalTime = strings[16];
+        //arrivalLocation = strings[18].substring(0,strings[18].length());
+        price = parseDouble(strings[7].substring(1));
     }
 
     @Override

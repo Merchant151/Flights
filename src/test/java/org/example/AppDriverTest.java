@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -254,6 +255,88 @@ public class AppDriverTest {
 
     }
 
+    @Test
+    public void areFlightsLoaded(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+
+        driver.submitOptions();
+
+
+
+        if(driver.areFLightsLoaded()){
+            System.out.println("flights are loaded");
+        }else{
+            System.out.println("flights are not loaded");
+        }
+
+    }
+    @Test
+    public void waitForFlightLoad(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+
+        driver.submitOptions();
+
+        driver.waitForFlightLoad();
+
+
+        Assert.assertTrue(driver.areFLightsLoaded());
+    }
+
+    @Test
+    public void grabflight(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+
+        driver.submitOptions();
+        driver.waitForFlightLoad();
+
+        //Grabs all flight strings on page
+        String firstFlight = driver.readFlight();
+        //System.out.println(firstFlight);
+        flight flight = new flight(firstFlight);
+
+        System.out.println("the price of this fligth is "+ flight.getPrice());
+
+
+    }
+
+    @Test
+    public void testChangeToReturnFlight(){
+        String leaving = "ATL";
+        String going = "CUN";
+        String date = "May 1, 2021";
+        driver.initNav();
+        driver.setLoc1(leaving);
+        driver.setLoc2(going);
+        driver.dateSpan(date);
+        driver.submitOptions();
+        driver.waitForFlightLoad();
+
+
+        driver.changeToReturnFlight();
+
+
+    }
 
 
     @AfterClass
