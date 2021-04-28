@@ -19,21 +19,37 @@ public class App
 
     public static void main( String[] args )
     {
-        /*
-        Triplist besttriplist = new Triplist();
-        ArrayList<String> locationlist;
+        App my = new App();
+        List<Trip> besttriplist;
+        List<String> locationlist;
 
         //create locationlist
         locationlist = createLocationList();
 
         //for each loop of best trip()
-        for (int i = 0; i < locationlist.toArray().length; i++) {
-            besttriplist.addTrip(getBestTrip(locationlist.get(i)));
-        }
+        besttriplist = my.runCollection(locationlist,"May 1, 2021","Aug 15, 2021");
 
         //output(besttriplist)
-        System.out.println(output(besttriplist));
-        */
+        System.out.println("Here is a list of the cheapest flights to vacation spots!");
+        for (int i = 0; i < besttriplist.size(); i++) {
+            System.out.println(besttriplist.get(i).toString());
+            System.out.println("\n\n");
+        }
+    }
+
+    private static List<String> createLocationList() {
+        List<String> goingList = new ArrayList<>();
+        goingList.add("Cancun");
+        goingList.add("Las Vegas");
+        goingList.add("Denver");
+        goingList.add("Rome");
+        goingList.add("Milan");
+        goingList.add("Paris");
+        goingList.add("Madrid");
+        goingList.add("Amsterdam");
+        goingList.add("Singapore");
+
+        return goingList;
     }
 
     public void setAllData(String leaving, String going, String date) {
@@ -93,9 +109,9 @@ public class App
 
         do{
             tripList.add(buildTrip(going,date));
-            System.out.println("App.fillFilightList "+date);
+            //System.out.println("App.fillFilightList "+date);
             date = myDriver.plus1(date);
-            System.out.println("App.fillFilightList new date"+date);
+            //System.out.println("App.fillFilightList new date"+date);
             newDateChange(date);
         }while(!date.equals(lastDate));
 
@@ -125,8 +141,6 @@ public class App
             setAllData("Atl",goingList.get(i),date);
             loadDate();
         }
-
-
         return bestTrips;
     }
 }

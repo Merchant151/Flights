@@ -138,7 +138,7 @@ public class AppDriver {
     public void dateSpan(String departing) {
         List<WebElement> leave = driver.findElements(By.className("uitk-faux-input"));
         leave.get(2).click();
-        System.out.println("AppDriver.dateSpan debug: "+departing);
+        //System.out.println("AppDriver.dateSpan debug: "+departing);
         Boolean dateFound = false;
         List<WebElement> dates;
         int numberOTries = 0;
@@ -149,7 +149,7 @@ public class AppDriver {
             for (int i = 0; i < dates.size(); i++) {
                 //System.out.println(dates.get(i).getAttribute("aria-label"));
                 if(dates.get(i).getAttribute("aria-label").contains(departing)&&!date1clicked){
-                    System.out.println("AppDriver.DateSpan " +dates.get(i).getAttribute("aria-label"));
+                    //System.out.println("AppDriver.DateSpan " +dates.get(i).getAttribute("aria-label"));
                     try {
                         dates.get(i).click();
                     }catch (ElementClickInterceptedException x){
@@ -168,7 +168,7 @@ public class AppDriver {
             if(date1clicked){
 
                 String datePlus7 = plus7(departing);
-                System.out.println("AppDriver.datespan trying to click "+ datePlus7);
+                //System.out.println("AppDriver.datespan trying to click "+ datePlus7);
                 for (int i = 0; i < dates.size(); i++) {
                     if(dates.get(i).getAttribute("aria-label").contains((datePlus7))){
                         dates.get(i).click();
@@ -375,8 +375,8 @@ public class AppDriver {
                         children.get(j).click();
                         nonstopAvailible = true;
                     }
-                }catch (NullPointerException e){
-                    //System.out.println("searching");
+                }catch (Exception e){
+                    System.out.println("non-stop flight unavailable");
                 }
             }
         }
