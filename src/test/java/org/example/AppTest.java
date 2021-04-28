@@ -144,6 +144,30 @@ public class AppTest
         }
     }
 
+    @Test
+    public void tinyAppTest(){
+        App my = new App();
+        List<Trip> besttriplist;
+        List<String> locationlist = new ArrayList<>();
+
+        //create locationlist
+        locationlist.add("Las Vegas");
+        locationlist.add("Denver");
+        locationlist.add("Rome");
+        locationlist.add("Milan");
+
+        //for each loop of best trip()
+        besttriplist = my.runCollection(locationlist,"May 1, 2021","May 5, 2021");
+
+        //output(besttriplist)
+        System.out.println("Here is a list of the cheapest flights to vacation spots!");
+        for (int i = 0; i < besttriplist.size(); i++) {
+            System.out.println(besttriplist.get(i).toString());
+            System.out.println("\n\n");
+        }
+    }
+
+
     @AfterClass
     public static void cleaning(){
         try{

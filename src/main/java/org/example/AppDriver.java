@@ -403,11 +403,7 @@ public class AppDriver {
                 System.out.println("weird exeption trying again");
             }
         }
-        try {
             return flightStrings.get(0);
-        }catch (IndexOutOfBoundsException e){
-            return "broken system flight departing at 12:00pm for 99999999999";
-        }
     }
 
     public void changeToReturnFlight() {
@@ -479,7 +475,7 @@ public class AppDriver {
         while (waiting){
             if(!areFLightsLoaded()){
                 try{
-                    //System.out.println("waiting for fight to load!");
+                    System.out.println("waiting for fight to load!");
                     Thread.sleep(500);
                 }catch (Exception e){
                     System.out.println("oof");
