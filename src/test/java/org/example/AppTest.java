@@ -1,5 +1,6 @@
 package org.example;
 
+import static java.lang.Double.parseDouble;
 import static org.junit.Assert.assertTrue;
 
 import junit.framework.TestResult;
@@ -151,9 +152,9 @@ public class AppTest
         List<String> locationlist = new ArrayList<>();
 
         //create locationlist
+        locationlist.add("Rome");
         locationlist.add("Las Vegas");
         locationlist.add("Denver");
-        locationlist.add("Rome");
         locationlist.add("Milan");
 
         //for each loop of best trip()
@@ -165,6 +166,18 @@ public class AppTest
             System.out.println(besttriplist.get(i).toString());
             System.out.println("\n\n");
         }
+    }
+
+    @Test
+    public void math(){
+        String string = "$1,608";
+        System.out.println(string);
+        if(string.contains(",")){
+            System.out.println("changing");
+            string = string.substring(0,2) + string.substring(3);
+            System.out.println(string);
+        }
+        System.out.println(parseDouble(string.substring(1)));
     }
 
 

@@ -80,7 +80,13 @@ public class App
      * @return return trip built from data
      */
     public Trip buildTrip(String destination,String leavingDate)  {
-        flight firstFlight = new flight(myDriver.readFlight());
+        flight firstFlight;
+        try {
+           firstFlight = new flight(myDriver.readFlight());
+       }catch (Exception e){
+           firstFlight = new flight();
+            System.out.println("AppDriver.readFlight fail using default");
+       }
         myDriver.changeToReturnFlight();
         myDriver.waitForFlightLoad();
         flight returnFlight = new flight(0,myDriver.readReturnFlight());

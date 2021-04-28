@@ -384,7 +384,7 @@ public class AppDriver {
     }
 
 
-    public String  readFlight() {
+    public String  readFlight() throws IndexOutOfBoundsException {
         try{
             Thread.sleep(100);
         }catch (Exception e){
@@ -403,7 +403,11 @@ public class AppDriver {
                 System.out.println("weird exeption trying again");
             }
         }
+        try {
             return flightStrings.get(0);
+        }catch (IndexOutOfBoundsException e){
+            throw e;
+        }
     }
 
     public void changeToReturnFlight() {

@@ -28,15 +28,17 @@ public class flight {
         if(strings[2].contains("flight")) {
             airline = strings[0];
             departTime = strings[5];
-            if(strings[6].contains(",")){
-                strings[7] = strings[7].substring(0,1)+strings[7].substring(2);
+            if(strings[7].contains(",")){
+                System.out.println("changing");
+                strings[7] = strings[7].substring(0,2)+strings[7].substring(3);
+                System.out.println(strings[7]);
             }
             price = parseDouble(strings[7].substring(1));
         }else{
             airline = strings[0];
             departTime = strings[4];
             if(strings[6].contains(",")){
-                strings[6] = strings[6].substring(0,1)+strings[6].substring(2);
+                strings[6] = strings[6].substring(0,2)+strings[6].substring(3);
             }
             price = parseDouble(strings[6].substring(1));
         }
@@ -53,7 +55,8 @@ public class flight {
             airline = strings[0];
             departTime = strings[4];
             if(strings[8].contains(",")){
-                strings[8] = strings[8].substring(0,1)+strings[8].substring(2);
+                strings[8] = strings[8].substring(0,2)+strings[8].substring(3);
+                System.out.println(strings[8]);
             }
             price = parseDouble(strings[8].substring(1));
         }
