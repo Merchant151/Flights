@@ -1,5 +1,9 @@
 package org.example;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
+
 import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +79,7 @@ public class App
      * @param leavingDate date you are leaving for your vacation
      * @return return trip built from data
      */
-    public Trip buildTrip(String destination,String leavingDate) {
+    public Trip buildTrip(String destination,String leavingDate)  {
         flight firstFlight = new flight(myDriver.readFlight());
         myDriver.changeToReturnFlight();
         myDriver.waitForFlightLoad();
@@ -108,11 +112,15 @@ public class App
         List<Trip> tripList = new ArrayList<>();
 
         do{
-            tripList.add(buildTrip(going,date));
-            //System.out.println("App.fillFilightList "+date);
-            date = myDriver.plus1(date);
-            //System.out.println("App.fillFilightList new date"+date);
-            newDateChange(date);
+            try {
+                tripList.add(buildTrip(going, date));
+                //System.out.println("App.fillFilightList "+date);
+                date = myDriver.plus1(date);
+                //System.out.println("App.fillFilightList new date"+date);
+                newDateChange(date);
+            }catch(StaleElementReferenceException e){
+                myDriver.clickPopUp();
+            }
         }while(!date.equals(lastDate));
 
         return tripList;

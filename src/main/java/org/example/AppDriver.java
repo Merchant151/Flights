@@ -376,7 +376,7 @@ public class AppDriver {
                         nonstopAvailible = true;
                     }
                 }catch (Exception e){
-                    System.out.println("non-stop flight unavailable");
+                    //System.out.println("non-stop flight unavailable");
                 }
             }
         }
@@ -386,7 +386,7 @@ public class AppDriver {
 
     public String  readFlight() {
         try{
-            Thread.sleep(3000);
+            Thread.sleep(100);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -399,11 +399,15 @@ public class AppDriver {
                     flightStrings.add(children.get(j).getText());
                     //System.out.println(children.get(j).getText());
                 }
-            }catch (StaleElementReferenceException e){
+            }catch (Exception e){
                 System.out.println("weird exeption trying again");
             }
         }
-        return flightStrings.get(0);
+        try {
+            return flightStrings.get(0);
+        }catch (IndexOutOfBoundsException e){
+            return "broken system flight departing at 12:00pm for 99999999999";
+        }
     }
 
     public void changeToReturnFlight() {
@@ -491,7 +495,7 @@ public class AppDriver {
     public String readReturnFlight() {
 
         try{
-            Thread.sleep(3000);
+            Thread.sleep(100);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -549,6 +553,18 @@ public class AppDriver {
 
         //System.out.println(fDate);
         return fDate;
+    }
+
+    public void clickPopUp() {
+        //<button type="button" class="uitk-button uitk-button-medium uitk-button-has-text uitk-button-tertiary uitk-dialog-footer-button">Refresh search</button>
+        List<WebElement> button = driver.findElements(By.className("uitk-button-tertiary"));
+        for (int i = 0; i < button.size(); i++) {
+            if(button.get(i).getText().contains("Refresh")){
+                System.out.println("clicked refresh");
+                button.get(i).click();
+            }
+
+        }
     }
 
 
