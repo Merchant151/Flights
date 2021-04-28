@@ -93,12 +93,40 @@ public class App
 
         do{
             tripList.add(buildTrip(going,date));
+            System.out.println("App.fillFilightList "+date);
             date = myDriver.plus1(date);
+            System.out.println("App.fillFilightList new date"+date);
+            newDateChange(date);
         }while(!date.equals(lastDate));
 
         return tripList;
 
 
 
+    }
+
+    private void newDateChange(String date) {
+        myDriver.dateSpan(date);
+        myDriver.submitDate();
+        myDriver.submitOptionsFromSearchPage();
+        myDriver.waitForFlightLoad();
+        myDriver.clickNonStop();
+        myDriver.waitForFlightLoad();
+    }
+
+    public List<Trip> runCollection(List<String> goingList, String date, String lastDate) {
+        List<Trip> bestTrips = new ArrayList<>();
+        setAllData("Atl",goingList.get(0),date);
+        loadDate();
+
+        for (int i = 0; i < goingList.size(); i++) {
+            bestTrips.add(bestTrip(fillFlightList(goingList.get(i), date,lastDate)));
+
+            setAllData("Atl",goingList.get(i),date);
+            loadDate();
+        }
+
+
+        return bestTrips;
     }
 }

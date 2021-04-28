@@ -138,10 +138,10 @@ public class AppDriver {
     public void dateSpan(String departing) {
         List<WebElement> leave = driver.findElements(By.className("uitk-faux-input"));
         leave.get(2).click();
-
+        System.out.println("AppDriver.dateSpan debug: "+departing);
         Boolean dateFound = false;
         List<WebElement> dates;
-
+        int numberOTries = 0;
         while(!dateFound){
             dates = driver.findElements(By.className("uitk-date-picker-day"));
             //System.out.println(i);
@@ -149,7 +149,7 @@ public class AppDriver {
             for (int i = 0; i < dates.size(); i++) {
                 //System.out.println(dates.get(i).getAttribute("aria-label"));
                 if(dates.get(i).getAttribute("aria-label").contains(departing)&&!date1clicked){
-                    //System.out.println("does contain departing");
+                    System.out.println("AppDriver.DateSpan " +dates.get(i).getAttribute("aria-label"));
                     try {
                         dates.get(i).click();
                     }catch (ElementClickInterceptedException x){
@@ -166,7 +166,9 @@ public class AppDriver {
                 //haha
             }
             if(date1clicked){
+
                 String datePlus7 = plus7(departing);
+                System.out.println("AppDriver.datespan trying to click "+ datePlus7);
                 for (int i = 0; i < dates.size(); i++) {
                     if(dates.get(i).getAttribute("aria-label").contains((datePlus7))){
                         dates.get(i).click();
@@ -176,9 +178,26 @@ public class AppDriver {
             }
 
             if(!dateFound){
-                driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div[1]/div[5]/div/figure/div[2]/div/div/div/div[2]/div/form/div[2]/div/div[1]/div[2]/div[2]/div/div/div[1]/div/div[2]/div/div[2]/div[1]/button[2]")).click();
+                //<button data-stid="date-picker-paging" type="button" class="uitk-button uitk-button-medium uitk-button-only-icon uitk-flex-item uitk-button-paging"><svg class="uitk-icon uitk-button-icon uitk-icon-medium" aria-labelledby="nextMonth-title" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title id="nextMonth-title">Next month</title><svg><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"></path></svg></svg></button>
+                if(numberOTries>5) {
+                    System.out.println("can't find the day I am looking for");
+                    List<WebElement> list = driver.findElements(By.className("uitk-button-paging"));
+                    List<WebElement> pagers = new ArrayList<>();
+                    try {
+                        for (int i = 0; i < list.size(); i++) {
+                            if (list.get(i).getAttribute("date-picker-paging").contains("date-picker-paging")) {
+                                System.out.println(i);
+                                System.out.println(list.get(i).getAttribute("type"));
+                                pagers.add(list.get(i));
+                            }
+                        }
+                    }catch (NullPointerException x){
+                        //found nothing
+                    }
+                }
                 //System.out.println("found next month button");
             }
+            numberOTries++;
         }
     }
 
@@ -202,17 +221,18 @@ public class AppDriver {
         String splitA[] = nDate.split("-");
         //Jun 17, 2021
         String fDate = "";
+
         fDate += monthFormatReverse(splitA[1])+" ";
         fDate += dayFormatReverse(splitA[2])+", ";
         fDate += splitA[0];
-
+        //System.out.println("AppDriver.plus7 Debug: "+nDate+"converted to "+fDate);
 
         //System.out.println(fDate);
         return fDate;
     }
 
     private String dayFormatReverse(String s) {
-        if(s.contains("0")){
+        if(s.substring(0,1).equals("0")){
             return s.substring(1);
         }
         return s;

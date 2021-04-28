@@ -128,6 +128,21 @@ public class AppTest
         System.out.println(best.totalPrice);
     }
 
+    @Test
+    public void testRunCollection(){
+        List<String> goingList = new ArrayList<>();
+        goingList.add("Cancun");
+        goingList.add("Las Vegas");
+        goingList.add("Denver");
+        String  date = "May 1, 2021";
+        String lastDate = "May 7, 2021";
+
+        List<Trip> BestTrips = myApp.runCollection(goingList,date,lastDate);
+
+        for (int i = 0; i < BestTrips.size(); i++) {
+            System.out.println(BestTrips.get(i).toString());
+        }
+    }
 
     @AfterClass
     public static void cleaning(){
